@@ -11,4 +11,20 @@ public class Sequence extends BaseObject {
         this.initialLocation = initialLocation;
         this.directions = directions;
     }
+
+    public Location getInitialLocation() {
+        return initialLocation;
+    }
+
+    public void setInitialLocation(Location initialLocation) {
+        this.initialLocation = initialLocation;
+    }
+
+    public List<Direction> getDirections() {
+        return directions;
+    }
+
+    public void setDirections(List<Direction> directions) {
+        this.directions = directions;
+    }
 }

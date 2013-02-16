@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Collections.EMPTY_LIST;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNot.not;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 
@@ -39,5 +41,31 @@ public class MowerServiceTest {
         assertThat(locations.size(), is(2));
         assertThat(locations.get(0), is(expectedLocation1));
         assertThat(locations.get(1), is(expectedLocation2));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpperRightFieldPositionNull() throws Exception {
+        List<Sequence> sequences = new ArrayList<Sequence>();
+        mowerService.runMowers(null, sequences);
+    }
+
+    @Test
+    public void testGetOtherMowersPositionOneSequence() throws Exception {
+        Sequence sequence = new Sequence(new Location(new Position(1, 1), Orientation.NORTH), null);
+        List<Sequence> sequences = Arrays.asList(sequence);
+        final List<Position> otherMowersPositions = mowerService.getOtherMowersPositions(sequence, sequences);
+        assertThat(otherMowersPositions, is(EMPTY_LIST));
+    }
+
+    @Test
+    public void testGetOtherMowersPositionTwoSequence() throws Exception {
+        final Position position1 = new Position(1, 1);
+        Sequence sequence1 = new Sequence(new Location(position1, Orientation.NORTH), null);
+        final Position position2 = new Position(3, 3);
+        Sequence sequence2 = new Sequence(new Location(position2, Orientation.NORTH), null);
+        List<Sequence> sequences = Arrays.asList(sequence1, sequence2);
+        final List<Position> otherMowersPositions = mowerService.getOtherMowersPositions(sequence1, sequences);
+        assertThat(otherMowersPositions, not(EMPTY_LIST));
+        assertThat(otherMowersPositions.get(0), is(position2));
     }
 }
