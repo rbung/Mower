@@ -53,14 +53,14 @@ public class MowerService implements IMowerService {
     private void updateLocation(Location location, Direction direction, Position upperRightFieldPosition, List<Position> otherMowersPositions) {
         if (Direction.G == direction) {
             location.setOrientation(turnLeft(location.getOrientation()));
-            LOGGER.info("Turn Left : new orientation {}", location.getPosition());
+            LOGGER.info("Turn Left : orientation updated {}", location);
         } else if (Direction.D == direction) {
             location.setOrientation(turnRight(location.getOrientation()));
-            LOGGER.info("Turn Right : new orientation {}", location.getPosition());
+            LOGGER.info("Turn Right : orientation updated {}", location);
         } else {
             try {
                 location.setPosition(moveOn(location, upperRightFieldPosition, otherMowersPositions));
-                LOGGER.info("New position : {}", location.getPosition());
+                LOGGER.info("Move on : position updated {}", location);
             } catch (CollisionException e) {
                 LOGGER.info("Position not updated : collision", e);
             } catch (OutOfFieldException e) {
