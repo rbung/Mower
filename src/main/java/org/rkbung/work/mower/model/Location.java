@@ -5,8 +5,8 @@ public class Location extends BaseObject {
 
     private Orientation orientation;
 
-    public Location(int x, int y, Orientation orientation) {
-        this.position = new Position(x, y);
+    public Location(Position position, Orientation orientation) {
+        this.position = position;
         this.orientation = orientation;
     }
 }

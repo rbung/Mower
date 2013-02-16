@@ -6,4 +6,9 @@ public class Sequence extends BaseObject {
     private Location initialLocation;
 
     private List<Direction> directions;
+
+    public Sequence(Location initialLocation, List<Direction> directions) {
+        this.initialLocation = initialLocation;
+        this.directions = directions;
+    }
 }
