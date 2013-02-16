@@ -9,7 +9,7 @@ import java.util.List;
 
 public class MowerService implements IMowerService {
     @Override
-    public List<Location> doRun(Position upperRightFieldPosition, List<Sequence> sequences) {
+    public List<Location> runMowers(Position upperRightFieldPosition, List<Sequence> sequences) {
         return null;
     }
 }

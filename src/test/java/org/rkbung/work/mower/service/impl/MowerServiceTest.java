@@ -32,7 +32,7 @@ public class MowerServiceTest {
                 Direction.D, Direction.A, Direction.D, Direction.D, Direction.A);
         Sequence sequence2 = new Sequence(location2, directions2);
         sequences.add(sequence2);
-        final List<Location> locations = mowerService.doRun(upperRightFieldPosition, sequences);
+        final List<Location> locations = mowerService.runMowers(upperRightFieldPosition, sequences);
         Location expectedLocation1 = new Location(new Position(1, 3), Orientation.NORTH);
         Location expectedLocation2 = new Location(new Position(5, 1), Orientation.EAST);
         assertThat(locations, is(notNullValue()));
