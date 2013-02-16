@@ -64,7 +64,7 @@ public class MowerService implements IMowerService {
             } catch (CollisionException e) {
                 LOGGER.info("Position not updated : collision", e);
             } catch (OutOfFieldException e) {
-                LOGGER.info("New position : out of field", e);
+                LOGGER.info("Position not updated : out of field", e);
             }
         }
     }
