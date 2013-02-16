@@ -68,4 +68,20 @@ public class MowerServiceTest {
         assertThat(otherMowersPositions, not(EMPTY_LIST));
         assertThat(otherMowersPositions.get(0), is(position2));
     }
+
+    @Test
+    public void testTurnRight() throws Exception {
+        assertThat(mowerService.turnRight(Orientation.NORTH), is(Orientation.EAST));
+        assertThat(mowerService.turnRight(Orientation.EAST), is(Orientation.SOUTH));
+        assertThat(mowerService.turnRight(Orientation.SOUTH), is(Orientation.WEST));
+        assertThat(mowerService.turnRight(Orientation.WEST), is(Orientation.NORTH));
+    }
+
+    @Test
+    public void testTurnLeft() throws Exception {
+        assertThat(mowerService.turnLeft(Orientation.NORTH), is(Orientation.WEST));
+        assertThat(mowerService.turnLeft(Orientation.WEST), is(Orientation.SOUTH));
+        assertThat(mowerService.turnLeft(Orientation.SOUTH), is(Orientation.EAST));
+        assertThat(mowerService.turnLeft(Orientation.EAST), is(Orientation.NORTH));
+    }
 }
