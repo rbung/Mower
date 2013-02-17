@@ -1,6 +1,8 @@
 package org.rkbung.work.mower.service.impl;
 
+import com.sun.xml.internal.bind.v2.util.CollisionCheckStack;
 import org.junit.Test;
+import org.rkbung.work.mower.exception.CollisionException;
 import org.rkbung.work.mower.exception.OutOfFieldException;
 import org.rkbung.work.mower.model.Direction;
 import org.rkbung.work.mower.model.Location;
@@ -180,5 +182,12 @@ public class MowerServiceTest {
         Position currentPosition = new Position(1, 6);
         Position upperRightFieldPosition = new Position(5, 5);
         mowerService.validIsInField(currentPosition, upperRightFieldPosition);
+    }
+
+    @Test(expected = CollisionException.class)
+    public void testValidNotCollision() throws Exception {
+        Position currentPosition = new Position(3, 3);
+        List<Position> otherMowersPositions = Arrays.asList(currentPosition);
+        mowerService.validNotCollision(currentPosition, otherMowersPositions);
     }
 }

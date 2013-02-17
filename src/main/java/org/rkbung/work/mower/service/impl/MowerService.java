@@ -96,7 +96,7 @@ public class MowerService implements IMowerService {
         return nextPosition;
     }
 
-    private void validNotCollision(Position nextPosition, List<Position> otherMowersPositions) {
+    protected void validNotCollision(Position nextPosition, List<Position> otherMowersPositions) {
         if (otherMowersPositions.contains(nextPosition)) {
             throw new CollisionException("cause nextPosition is " + nextPosition);
         }
