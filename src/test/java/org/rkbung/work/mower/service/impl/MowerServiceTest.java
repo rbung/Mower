@@ -25,10 +25,10 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 public class MowerServiceTest {
-    private MowerService mowerService = new MowerService();
+    private final MowerService mowerService = new MowerService();
 
     @Spy
-    private MowerService spyMowerService = new MowerService();
+    private final MowerService spyMowerService = new MowerService();
 
     @Before
     public void setUp() throws Exception {
