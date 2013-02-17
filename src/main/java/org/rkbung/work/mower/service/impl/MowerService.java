@@ -70,7 +70,7 @@ public class MowerService implements IMowerService {
         return sequence.getInitialLocation();
     }
 
-    private void updateLocation(Location location, Direction direction, Position upperRightFieldPosition, List<Position> otherMowersPositions) {
+    protected void updateLocation(Location location, Direction direction, Position upperRightFieldPosition, List<Position> otherMowersPositions) {
         if (Direction.G == direction) {
             location.setOrientation(turnLeft(location.getOrientation()));
             LOGGER.info("Turn Left : orientation updated {}", location);

@@ -1,7 +1,9 @@
 package org.rkbung.work.mower.service.impl;
 
-import com.sun.xml.internal.bind.v2.util.CollisionCheckStack;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.rkbung.work.mower.exception.CollisionException;
 import org.rkbung.work.mower.exception.OutOfFieldException;
 import org.rkbung.work.mower.model.Direction;
@@ -19,9 +21,19 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 
 public class MowerServiceTest {
     private MowerService mowerService = new MowerService();
+
+    @Spy
+    private MowerService spyMowerService = new MowerService();
+
+    @Before
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     public void testRequiredMower() throws Exception {
@@ -189,5 +201,27 @@ public class MowerServiceTest {
         Position currentPosition = new Position(3, 3);
         List<Position> otherMowersPositions = Arrays.asList(currentPosition);
         mowerService.validNotCollision(currentPosition, otherMowersPositions);
+    }
+
+    @Test
+    public void testUpdateLocation_CollisionException() throws Exception {
+        final Location location = mock(Location.class);
+        final Direction direction = Direction.A;
+        final Position upperPosition = new Position(5, 5);
+        final List<Position> otherPositions = new ArrayList<Position>();
+        doThrow(new CollisionException("test")).when(spyMowerService).moveOn(location, upperPosition, otherPositions);
+        spyMowerService.updateLocation(location, direction, upperPosition, otherPositions);
+        verify(location, never()).setPosition(any(Position.class));
+    }
+
+    @Test
+    public void testUpdateLocation_OutOfFieldException() throws Exception {
+        final Location location = mock(Location.class);
+        final Direction direction = Direction.A;
+        final Position upperPosition = new Position(5, 5);
+        final List<Position> otherPositions = new ArrayList<Position>();
+        doThrow(new OutOfFieldException("test")).when(spyMowerService).moveOn(location, upperPosition, otherPositions);
+        spyMowerService.updateLocation(location, direction, upperPosition, otherPositions);
+        verify(location, never()).setPosition(any(Position.class));
     }
 }
