@@ -84,4 +84,72 @@ public class MowerServiceTest {
         assertThat(mowerService.turnLeft(Orientation.SOUTH), is(Orientation.EAST));
         assertThat(mowerService.turnLeft(Orientation.EAST), is(Orientation.NORTH));
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testValidateEntries_UpperRightFieldPositionNull() throws Exception {
+        mowerService.validateEntries(null, new ArrayList<Sequence>());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testValidateEntries_UpperRightFieldPositionInvalid1() throws Exception {
+        Position upperRightFieldPosition = new Position(0, 5);
+        mowerService.validateEntries(upperRightFieldPosition, new ArrayList<Sequence>());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testValidateEntries_UpperRightFieldPositionInvalid2() throws Exception {
+        Position upperRightFieldPosition = new Position(5, 0);
+        mowerService.validateEntries(upperRightFieldPosition, new ArrayList<Sequence>());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testValidateEntries_InvalidSequenceLocationNull() throws Exception {
+        Position upperRightFieldPosition = new Position(5, 5);
+        Sequence sequence = new Sequence(null, new ArrayList<Direction>());
+        final ArrayList<Sequence> sequences = new ArrayList<Sequence>();
+        sequences.add(sequence);
+        mowerService.validateEntries(upperRightFieldPosition, sequences);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testValidateEntries_InvalidSequencePositionNull() throws Exception {
+        Position upperRightFieldPosition = new Position(5, 5);
+        Location location = new Location(null, Orientation.NORTH);
+        Sequence sequence = new Sequence(location, new ArrayList<Direction>());
+        final ArrayList<Sequence> sequences = new ArrayList<Sequence>();
+        sequences.add(sequence);
+        mowerService.validateEntries(upperRightFieldPosition, sequences);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testValidateEntries_InvalidSequenceDirectionNull() throws Exception {
+        Position upperRightFieldPosition = new Position(5, 5);
+        Location location = new Location(new Position(1, 2), null);
+        Sequence sequence = new Sequence(location, new ArrayList<Direction>());
+        final ArrayList<Sequence> sequences = new ArrayList<Sequence>();
+        sequences.add(sequence);
+        mowerService.validateEntries(upperRightFieldPosition, sequences);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testValidateEntries_InvalidSequence2MowersInSamePlace() throws Exception {
+        Position upperRightFieldPosition = new Position(5, 5);
+        final Position position = new Position(1, 2);
+        Location location1 = new Location(position, Orientation.NORTH);
+        Sequence sequence1 = new Sequence(location1, new ArrayList<Direction>());
+        Location location2 = new Location(position, Orientation.WEST);
+        Sequence sequence2 = new Sequence(location2, new ArrayList<Direction>());
+        final List<Sequence> sequences = Arrays.asList(sequence1, sequence2);
+        mowerService.validateEntries(upperRightFieldPosition, sequences);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testValidateEntries_MowerNotInField() throws Exception {
+        Position upperRightFieldPosition = new Position(5, 5);
+        Location location = new Location(new Position(6, 5), Orientation.NORTH);
+        Sequence sequence = new Sequence(location, new ArrayList<Direction>());
+        final ArrayList<Sequence> sequences = new ArrayList<Sequence>();
+        sequences.add(sequence);
+        mowerService.validateEntries(upperRightFieldPosition, sequences);
+    }
 }

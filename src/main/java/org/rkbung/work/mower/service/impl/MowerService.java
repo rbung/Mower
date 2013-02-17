@@ -1,6 +1,7 @@
 package org.rkbung.work.mower.service.impl;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.Validate;
 import org.rkbung.work.mower.exception.CollisionException;
 import org.rkbung.work.mower.exception.OutOfFieldException;
 import org.rkbung.work.mower.model.Direction;
@@ -23,10 +24,7 @@ public class MowerService implements IMowerService {
 
     @Override
     public List<Location> runMowers(Position upperRightFieldPosition, List<Sequence> sequences) {
-        validEntries(upperRightFieldPosition, sequences);
-        if (upperRightFieldPosition == null) {
-            throw new IllegalArgumentException("upperRightFieldPosition must not be null");
-        }
+        validateEntries(upperRightFieldPosition, sequences);
         List<Location> result = new ArrayList<Location>();
         if (CollectionUtils.isNotEmpty(sequences)) {
             for (Sequence sequence : sequences) {
@@ -37,8 +35,30 @@ public class MowerService implements IMowerService {
         return result;
     }
 
-    private void validEntries(Position upperRightFieldPosition, List<Sequence> sequences) {
-        //TODO (valider si le champs est correcte, si des tondeuses ne sont pas superposées, etc.
+    protected void validateEntries(Position upperRightFieldPosition, List<Sequence> sequences) {
+        Validate.notNull(upperRightFieldPosition, "upperRightFieldPosition is required");
+        if (upperRightFieldPosition.getX() < 1 || upperRightFieldPosition.getY() < 1) {
+            throw new IllegalArgumentException("upperRightFieldPosition is invalid " + upperRightFieldPosition);
+        }
+        if (CollectionUtils.isNotEmpty(sequences)) {
+            List<Position> mowersInitialPositions = new ArrayList<Position>();
+            for (Sequence sequence : sequences) {
+                Validate.notNull(sequence.getInitialLocation(), "location is required for sequence");
+                final Position position = sequence.getInitialLocation().getPosition();
+                Validate.notNull(position, "position is required for location's sequence");
+                Validate.notNull(sequence.getInitialLocation().getOrientation(), "orientation is required for location's sequence");
+                if (mowersInitialPositions.contains(position)) {
+                    throw new IllegalArgumentException("At least 2 mowers at the same place ! " + position);
+                } else {
+                    mowersInitialPositions.add(position);
+                }
+                try {
+                    validIsInField(position, upperRightFieldPosition);
+                } catch (OutOfFieldException e) {
+                    throw new IllegalArgumentException("Mower not in field ! " + sequence.getInitialLocation());
+                }
+            }
+        }
     }
 
     private Location playSequence(Sequence sequence, Position upperRightFieldPosition, List<Position> otherMowersPositions) {
