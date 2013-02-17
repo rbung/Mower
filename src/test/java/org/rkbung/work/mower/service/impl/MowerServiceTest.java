@@ -1,6 +1,7 @@
 package org.rkbung.work.mower.service.impl;
 
 import org.junit.Test;
+import org.rkbung.work.mower.exception.OutOfFieldException;
 import org.rkbung.work.mower.model.Direction;
 import org.rkbung.work.mower.model.Location;
 import org.rkbung.work.mower.model.Orientation;
@@ -151,5 +152,33 @@ public class MowerServiceTest {
         final ArrayList<Sequence> sequences = new ArrayList<Sequence>();
         sequences.add(sequence);
         mowerService.validateEntries(upperRightFieldPosition, sequences);
+    }
+
+    @Test(expected = OutOfFieldException.class)
+    public void testValidIsInField_xTooLow() throws Exception {
+        Position currentPosition = new Position(-1, 1);
+        Position upperRightFieldPosition = new Position(5, 5);
+        mowerService.validIsInField(currentPosition, upperRightFieldPosition);
+    }
+
+    @Test(expected = OutOfFieldException.class)
+    public void testValidIsInField_yTooLow() throws Exception {
+        Position currentPosition = new Position(1, -1);
+        Position upperRightFieldPosition = new Position(5, 5);
+        mowerService.validIsInField(currentPosition, upperRightFieldPosition);
+    }
+
+    @Test(expected = OutOfFieldException.class)
+    public void testValidIsInField_xTooHigh() throws Exception {
+        Position currentPosition = new Position(6, 1);
+        Position upperRightFieldPosition = new Position(5, 5);
+        mowerService.validIsInField(currentPosition, upperRightFieldPosition);
+    }
+
+    @Test(expected = OutOfFieldException.class)
+    public void testValidIsInField_yTooHigh() throws Exception {
+        Position currentPosition = new Position(1, 6);
+        Position upperRightFieldPosition = new Position(5, 5);
+        mowerService.validIsInField(currentPosition, upperRightFieldPosition);
     }
 }

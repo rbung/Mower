@@ -106,7 +106,7 @@ public class MowerService implements IMowerService {
         if (nextPosition.getX() < 0
                 || nextPosition.getY() < 0
                 || nextPosition.getX() > upperRightFieldPosition.getX()
-                || nextPosition.getX() > upperRightFieldPosition.getX()) {
+                || nextPosition.getY() > upperRightFieldPosition.getY()) {
             throw new OutOfFieldException("cause nextPosition is " + nextPosition);
         }
     }
