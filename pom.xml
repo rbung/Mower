@@ -10,6 +10,11 @@
     <name>mower</name>
     <url>http://maven.apache.org</url>
 
+    <scm>
+        <url>http://github.com/rkbung/mower</url>
+        <connection>scm:git:git@github.com:rkbung/mower.git</connection>
+    </scm>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
