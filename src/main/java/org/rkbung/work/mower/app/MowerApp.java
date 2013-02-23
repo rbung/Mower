@@ -131,7 +131,7 @@ public class MowerApp {
     }
 
     private static void invalidFile() {
-        System.out.println("Invalid file !");
+        System.err.println("Invalid file !");
         System.exit(-1);
     }
 }
