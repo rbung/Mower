@@ -1,1 +1,9 @@
 Mowers project by RBU
+
+Pour tester le projet, avec le jar, taper la commande suivante :
+java -cp mower-1.0.jar org.rkbung.work.mower.app.MowerApp PATH_TO_MOWERS_FILE
+
+ex : java -cp mower-1.0.jar org.rkbung.work.mower.app.MowerApp /usr/local/projects/Mower/src/main/resources/test.txt
+
+Sinon, exécuter le test unitaire MowerServiceTest.java
+
