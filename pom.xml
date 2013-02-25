@@ -12,8 +12,8 @@
 
     <scm>
         <url>http://github.com/rkbung/mower</url>
-        <connection>scm:git:git@github.com:rkbung/Mower.git</connection>
-        <developerConnection>scm:git:git@github.com:rkbung/Mower.git</developerConnection>
+        <connection>scm:git:git@github.com:rkbung/mower.git</connection>
+        <developerConnection>scm:git:git@github.com:rkbung/mower.git</developerConnection>
     </scm>
 
     <properties>
